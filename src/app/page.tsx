@@ -1,6 +1,5 @@
 'use client';
 import Image from 'next/image';
-import Header from '@/components/Header';
 import { Facebook, Twitter, Instagram } from 'lucide-react';
 
 export default function Home() {
