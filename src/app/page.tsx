@@ -1,109 +1,72 @@
 'use client';
-import { useState } from 'react';
+import Image from 'next/image';
+import Header from '@/components/Header';
+import { Facebook, Twitter, Instagram } from 'lucide-react';
 
-export default function HomePage() {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: ''
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-  };
-
+export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-400 to-red-500 font-poppins">
-      {/* Nav is optional since layout.tsx might already include it */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="text-white font-bold text-xl">Learn to Code</div>
-            <div className="flex space-x-8">
-              <a href="/about" className="text-white hover:text-white/80 transition-colors font-medium">About</a>
-              <a href="/contact" className="text-white hover:text-white/80 transition-colors font-medium">Contact</a>
-            </div>
-          </div>
+    <main className="min-h-screen bg-purple-700 relative overflow-hidden font-poppins">
+      <Image
+        src="/images/bg-desktop.svg"
+        alt="Background pattern"
+        fill
+        className="object-cover z-0"
+        priority
+      />
+      <div className="relative z-10 px-6 py-8 max-w-7xl mx-auto">
+       
+{/*logo to be placed below header*/}
+        <div className="mt-8 mb-8">
+          <Image
+            src="/images/logo.svg"
+            alt="Huddle Logo"
+            width={160}
+            height={40}
+            priority
+          />
         </div>
-      </nav>
 
-      <div className="pt-20 min-h-screen flex items-center justify-center p-4">
-        <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-          {/* Text Section */}
-          <div className="text-white text-center lg:text-left">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-6">Learn to code by watching others</h1>
-            <p className="text-lg md:text-xl opacity-90 mb-8">
-              See how experienced developers solve problems in real-time. 
-              Watching scripted tutorials is great, but understanding how 
-              developers think is invaluable.
+ 
+        <section className="flex flex-col-reverse lg:flex-row items-center justify-between mt-8 lg:mt-24 gap-12">
+
+          <div className="flex-1 max-w-2xl">
+            <Image
+              src="/images/illustration-mockups.svg"
+              alt="Community mockups"
+              width={800}
+              height={600}
+              className="w-full h-auto"
+              priority
+            />
+          </div>
+
+          <div className="flex-1 text-center lg:text-left max-w-xl">
+            <h1 className="text-white text-4xl lg:text-5xl font-bold leading-tight mb-6">
+              Build The Community Your Fans Will Love
+            </h1>
+            <p className="text-white text-lg opacity-90 mb-8 leading-relaxed font-medium">
+              Huddle re-imagines the way we build communities. You have a voice, but so does your audience.
+              Create connections with your users as you engage in genuine discussion.
             </p>
+            <button className="bg-white text-purple-700 hover:text-purple-800 font-semibold px-10 py-3 rounded-full shadow-md hover:shadow-lg transition duration-200">
+              Register
+            </button>
           </div>
+        </section>
 
-          {/* Form Section */}
-          <div className="w-full max-w-md mx-auto lg:max-w-none">
-            <div className="bg-purple-700 text-white text-center py-4 px-6 rounded-lg mb-6 shadow-lg">
-              <p className="text-sm md:text-base">
-                <span className="font-semibold">Try it free 7 days</span> then $20/mo. thereafter
-              </p>
-            </div>
 
-            <form onSubmit={handleSubmit} className="bg-white p-6 md:p-8 rounded-lg shadow-lg space-y-4">
-              <input
-                type="text"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleInputChange}
-                placeholder="First Name"
-                className="w-full px-4 py-3 border-2 border-purple-300 rounded-md placeholder-gray-900/70 focus:outline-none focus:border-purple-700"
-              />
-              <input
-                type="text"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleInputChange}
-                placeholder="Last Name"
-                className="w-full px-4 py-3 border-2 border-purple-300 rounded-md placeholder-gray-900/70 focus:outline-none focus:border-purple-700"
-              />
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Email Address"
-                className="w-full px-4 py-3 border-2 border-purple-300 rounded-md placeholder-gray-900/70 focus:outline-none focus:border-purple-700"
-              />
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                placeholder="Password"
-                className="w-full px-4 py-3 border-2 border-purple-300 rounded-md placeholder-gray-900/70 focus:outline-none focus:border-purple-700"
-              />
-              <button
-                type="submit"
-                className="w-full bg-green-400 hover:bg-green-500 text-white font-semibold py-3 px-4 rounded-md transition-all duration-200 transform hover:-translate-y-1 active:translate-y-0 shadow-lg hover:shadow-xl uppercase tracking-wide"
-              >
-                Claim your free trial
-              </button>
-              <p className="text-center text-sm text-purple-400 leading-relaxed">
-                By clicking the button, you are agreeing to our{' '}
-                <a href="#" className="text-red-400 font-semibold hover:underline">Terms and Services</a>
-              </p>
-            </form>
-          </div>
-        </div>
+        <footer className="mt-16 flex justify-center lg:justify-end space-x-4">
+          <a href="#" className="w-10 h-10 border border-white rounded-full flex items-center justify-center text-white hover:border-purple-400 hover:text-purple-400 transition-colors duration-300">
+            <Facebook className="w-4 h-4" />
+          </a>
+          <a href="#" className="w-10 h-10 border border-white rounded-full flex items-center justify-center text-white hover:border-purple-400 hover:text-purple-400 transition-colors duration-300">
+            <Twitter className="w-4 h-4" />
+          </a>
+          <a href="#" className="w-10 h-10 border border-white rounded-full flex items-center justify-center text-white hover:border-purple-400 hover:text-purple-400 transition-colors duration-300">
+            <Instagram className="w-4 h-4" />
+          </a>
+        </footer>
       </div>
-    </div>
+    </main>
   );
 }
