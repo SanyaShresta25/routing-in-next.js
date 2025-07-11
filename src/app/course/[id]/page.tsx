@@ -3,10 +3,10 @@ import type { Metadata } from "next";
 import CourseDetail from "@/components/CourseDetail";
 import { courses } from "@/data/courses";
 import type { Course } from "@/types/course";
-
 export async function generateMetadata(
-  { params }: { params: { id: string } }
+  props: { params: { id: string } }
 ): Promise<Metadata> {
+  const { params } = await Promise.resolve(props); 
   const course = courses.find((c: Course) => c.id === params.id);
 
   if (!course) {
