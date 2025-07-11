@@ -3,8 +3,9 @@
 export interface Instructor {
   name: string;
   bio: string;
-  avatar: string; 
+  avatar: string;
 }
+
 export interface Course {
   id: string;
   title: string;
@@ -20,9 +21,5 @@ export interface Course {
   is_free: boolean;
   tags: string[];
   published_date: string;
-  instructor: {
-    name: string;
-    bio: string;
-    avatar: string;
-  };
+  instructor: Instructor;
 }
