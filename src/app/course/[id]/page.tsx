@@ -3,11 +3,12 @@ import type { Metadata } from "next";
 import CourseDetail from "@/components/CourseDetail";
 import { courses } from "@/data/courses";
 import type { Course } from "@/types/course";
+
+// Correctly typed metadata function
 export async function generateMetadata(
   props: { params: { id: string } }
 ): Promise<Metadata> {
-  const { params } = await Promise.resolve(props); 
-  const course = courses.find((c: Course) => c.id === params.id);
+  const course = courses.find((c: Course) => c.id === props.params.id);
 
   if (!course) {
     return {
@@ -22,7 +23,12 @@ export async function generateMetadata(
   };
 }
 
-export default function CourseDetailPage({ params }: { params: { id: string } }) {
+// Correctly typed page component
+export default function CourseDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const course = courses.find((c: Course) => c.id === params.id);
 
   if (!course) return notFound();
