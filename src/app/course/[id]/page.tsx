@@ -1,31 +1,21 @@
-
-
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CourseDetail from "@/components/CourseDetail";
-import type { Course } from "@/types/course";
+import { Course } from "@/types/course";
+import type { CoursePageParams } from "@/types/page"; // ✅ Use your custom type
 
-// Define the expected props for the page and metadata functions
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-// Fetch the course data
+// Fetching
 async function getCoursesData(): Promise<Course[]> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  const res = await fetch(new URL("/assets/courses.json", baseUrl), {
-    cache: "no-store",
-  });
+  const res = await fetch(`${baseUrl}/assets/courses.json`, { cache: "no-store" });
 
-  if (!res.ok) throw new Error("Failed to fetch courses data");
+  if (!res.ok) throw new Error("Failed to fetch course data");
 
   return res.json();
 }
 
-// Generate dynamic metadata for each course
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+// Metadata
+export async function generateMetadata({ params }: CoursePageParams): Promise<Metadata> {
   const courses = await getCoursesData();
   const course = courses.find((c) => c.id === params.id);
 
@@ -39,22 +29,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${course.title} | LearnHub`,
     description: course.short_description,
-    openGraph: {
-      title: `${course.title} | LearnHub`,
-      description: course.short_description,
-      images: [course.thumbnail],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${course.title} | LearnHub`,
-      description: course.short_description,
-      images: [course.thumbnail],
-    },
   };
 }
 
-// Default page rendering
-export default async function CourseDetailPage({ params }: PageProps) {
+// Page
+export default async function CourseDetailPage({ params }: CoursePageParams) {
   const courses = await getCoursesData();
   const course = courses.find((c) => c.id === params.id);
 
