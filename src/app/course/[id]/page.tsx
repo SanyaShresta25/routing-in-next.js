@@ -1,9 +1,10 @@
+// src/app/course/[id]/page.tsx
+
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { notFound } from "next/navigation";
 import type { Course } from "@/types/course";
 
-// Dynamic import of client component
+// ✅ This dynamically loads the client-side component
 const ClientCoursePage = dynamic(() => import("./ClientCoursePage"), {
   ssr: false,
 });
@@ -18,7 +19,6 @@ async function getCoursesData(): Promise<Course[]> {
   return res.json();
 }
 
-// ✅ generateMetadata stays here
 export async function generateMetadata({
   params,
 }: {
@@ -40,6 +40,6 @@ export async function generateMetadata({
   };
 }
 
-export default function CoursePageWrapper() {
+export default function Page() {
   return <ClientCoursePage />;
 }
