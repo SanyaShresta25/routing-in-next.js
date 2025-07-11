@@ -3,22 +3,26 @@ import { notFound } from "next/navigation";
 import CourseDetail from "@/components/CourseDetail";
 import { Course } from "@/types/course";
 
-interface Params {
-  params: { id: string };
-}
-
+// Fetch course data
 async function getCoursesData(): Promise<Course[]> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  const res = await fetch(new URL("/assets/courses.json", baseUrl), {
+  const baseUrl = "http://localhost:3000";
+  const res = await fetch(`${baseUrl}/assets/courses.json`, {
     cache: "no-store",
   });
 
-  if (!res.ok) throw new Error("Failed to fetch courses data");
+  if (!res.ok) {
+    throw new Error("Failed to fetch courses data");
+  }
 
   return res.json();
 }
 
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
+// Metadata generation
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
   const courses = await getCoursesData();
   const course = courses.find((c) => c.id === params.id);
 
@@ -46,7 +50,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-export default async function CourseDetailPage({ params }: Params) {
+// Page Component
+export default async function CourseDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const courses = await getCoursesData();
   const course = courses.find((c) => c.id === params.id);
 

@@ -5,21 +5,24 @@ export interface Instructor {
   bio: string;
   avatar: string; 
 }
-
 export interface Course {
-  id: string; 
+  id: string;
   title: string;
   short_description: string;
   full_description: string;
-  thumbnail: string; 
-  level: "Beginner" | "Intermediate" | "Advanced" | string;
-  duration: string; 
+  thumbnail: string;
+  level: string;
+  duration: string;
   category: string;
-  rating: number; 
+  rating: number;
   students_enrolled: number;
   price: number;
   is_free: boolean;
-  tags: string[]; 
+  tags: string[];
   published_date: string;
-  instructor: Instructor;
+  instructor: {
+    name: string;
+    bio: string;
+    avatar: string;
+  };
 }
