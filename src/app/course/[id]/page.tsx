@@ -1,23 +1,21 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CourseDetail from "@/components/CourseDetail";
-import { Course } from "@/types/course";
+import type { Course } from "@/types/course";
 
-// Fetch course data
+
 async function getCoursesData(): Promise<Course[]> {
-  const baseUrl = "http://localhost:3000";
-  const res = await fetch(`${baseUrl}/assets/courses.json`, {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const res = await fetch(new URL("/assets/courses.json", baseUrl), {
     cache: "no-store",
   });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch courses data");
-  }
+  if (!res.ok) throw new Error("Failed to fetch courses data");
 
   return res.json();
 }
 
-// Metadata generation
+
 export async function generateMetadata({
   params,
 }: {
@@ -50,7 +48,6 @@ export async function generateMetadata({
   };
 }
 
-// Page Component
 export default async function CourseDetailPage({
   params,
 }: {
