@@ -1,26 +1,27 @@
 import { Metadata } from "next";
 import CourseDetail from "@/components/CourseDetail";
 import { notFound } from "next/navigation";
-import type { Course } from "@/types/course"; 
+import { Course } from "@/types/course";
 
-// Fetch course data from public JSON file
+interface CoursePageProps {
+  params: {
+    id: string;
+  };
+}
+
+// Fetch course data
 async function getCoursesData(): Promise<Course[]> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const res = await fetch(new URL("/assets/courses.json", baseUrl), {
     cache: "no-store",
   });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch courses data");
-  }
-
+  if (!res.ok) throw new Error("Failed to fetch courses data");
   return res.json();
 }
 
-// Generate dynamic metadata per course
-export async function generateMetadata(
-  { params }: { params: { id: string } }
-): Promise<Metadata> {
+// Metadata
+export async function generateMetadata({ params }: CoursePageProps): Promise<Metadata> {
   const courses = await getCoursesData();
   const course = courses.find((c) => c.id === params.id);
 
@@ -37,14 +38,7 @@ export async function generateMetadata(
     openGraph: {
       title: `${course.title} | LearnHub`,
       description: course.short_description,
-      images: [
-        {
-          url: course.thumbnail,
-          width: 1200,
-          height: 630,
-          alt: `${course.title} thumbnail`,
-        },
-      ],
+      images: [course.thumbnail],
     },
     twitter: {
       card: "summary_large_image",
@@ -55,12 +49,8 @@ export async function generateMetadata(
   };
 }
 
-// Course detail page
-export default async function CourseDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+// Page
+export default async function CourseDetailPage({ params }: CoursePageProps) {
   const courses = await getCoursesData();
   const course = courses.find((c) => c.id === params.id);
 
