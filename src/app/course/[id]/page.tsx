@@ -1,26 +1,32 @@
-// page.tsx inside /app/course/[id]/
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CourseDetail from "@/components/CourseDetail";
 import { Course } from "@/types/course";
+import { headers } from "next/headers";
 
+interface Params {
+  params: { id: string };
+}
+
+//  Fetch course data dynamically
 async function getCoursesData(): Promise<Course[]> {
-  const res = await fetch("/assets/courses.json", {
+  const headersList = await headers(); // ✅ await headers()
+  const host = headersList.get("host")!;
+  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+
+  const res = await fetch(`${protocol}://${host}/assets/courses.json`, {
     cache: "no-store",
   });
 
-  if (!res.ok) throw new Error("Failed to fetch course data");
+  if (!res.ok) throw new Error("Failed to fetch courses");
 
   return res.json();
 }
 
-
-export async function generateMetadata(
-  context: { params: Promise<{ id: string }> }
-): Promise<Metadata> {
-  const { id } = await context.params; 
+//  Metadata generation
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const courses = await getCoursesData();
-  const course = courses.find((c) => c.id === id);
+  const course = courses.find((c) => c.id === params.id);
 
   if (!course) {
     return {
@@ -35,18 +41,12 @@ export async function generateMetadata(
   };
 }
 
-export default async function CourseDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params; 
-
+//  Page component
+export default async function CourseDetailPage({ params }: Params) {
   const courses = await getCoursesData();
-  const course = courses.find((c) => c.id === id);
+  const course = courses.find((c) => c.id === params.id);
 
   if (!course) return notFound();
 
   return <CourseDetail course={course} />;
 }
-
