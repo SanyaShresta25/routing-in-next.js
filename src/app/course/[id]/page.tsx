@@ -1,12 +1,12 @@
-
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import CourseDetail from "@/components/CourseDetail";
-import { courses } from "@/data/courses"; 
+import { courses } from "@/data/courses";
 import type { Course } from "@/types/course";
 
-// Metadata
-export function generateMetadata({ params }: { params: { id: string } }): Metadata {
+export async function generateMetadata(
+  { params }: { params: { id: string } }
+): Promise<Metadata> {
   const course = courses.find((c: Course) => c.id === params.id);
 
   if (!course) {
@@ -22,7 +22,6 @@ export function generateMetadata({ params }: { params: { id: string } }): Metada
   };
 }
 
-// Page
 export default function CourseDetailPage({ params }: { params: { id: string } }) {
   const course = courses.find((c: Course) => c.id === params.id);
 
