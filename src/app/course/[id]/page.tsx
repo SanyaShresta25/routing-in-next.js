@@ -1,31 +1,13 @@
-import { Metadata } from "next";
+
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import CourseDetail from "@/components/CourseDetail";
-import { Course } from "@/types/course";
-import { headers } from "next/headers";
+import { courses } from "@/data/courses"; 
+import type { Course } from "@/types/course";
 
-// Fetch course data
-async function getCoursesData(): Promise<Course[]> {
-  const headersList = headers();
-  const host = headersList.get("host")!;
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-
-  const res = await fetch(`${protocol}://${host}/assets/courses.json`, {
-    cache: "no-store",
-  });
-
-  if (!res.ok) throw new Error("Failed to fetch course data");
-
-  return res.json();
-}
-
-//  Metadata generation
-export async function generateMetadata(
-  context: { params: { id: string } }
-): Promise<Metadata> {
-  const id = context.params.id;
-  const courses = await getCoursesData();
-  const course = courses.find((c) => c.id === id);
+// Metadata
+export function generateMetadata({ params }: { params: { id: string } }): Metadata {
+  const course = courses.find((c: Course) => c.id === params.id);
 
   if (!course) {
     return {
@@ -40,14 +22,9 @@ export async function generateMetadata(
   };
 }
 
-//  Page component
-export default async function CourseDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const courses = await getCoursesData();
-  const course = courses.find((c) => c.id === params.id);
+// Page
+export default function CourseDetailPage({ params }: { params: { id: string } }) {
+  const course = courses.find((c: Course) => c.id === params.id);
 
   if (!course) return notFound();
 
