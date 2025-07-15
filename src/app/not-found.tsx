@@ -1,8 +1,12 @@
 export default function NotFound() {
   return (
-    <div style={{ textAlign: 'center', paddingTop: '50px' }}>
-      <h1>404 - Page Not Found</h1>
-      <p>The page you're looking for doesn't exist or has been moved.</p>
-    </div>
+    <main className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold mb-4">404 - Page Not Found</h1>
+        <p className="text-gray-600">
+          Sorry, we couldn&apos;t find what you&apos;re looking for.
+        </p>
+      </div>
+    </main>
   );
 }
