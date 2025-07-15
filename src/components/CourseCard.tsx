@@ -1,10 +1,11 @@
-import Link from "next/link";
 import { Course } from "@/types/course";
 import Image from "next/image";
+// import Link from "next/link"; // No longer needed if not using Link
 
 export default function CourseCard({ course }: { course: Course }) {
   return (
-    <Link href={`/course/${course.id}`} className="block bg-white shadow rounded p-4 hover:bg-gray-50">
+    // <Link href={`/course/${course.id}`} className="block bg-white shadow rounded p-4 hover:bg-gray-50">
+    <div className="block bg-white shadow rounded p-4 hover:bg-gray-50">
       <Image
         src={course.thumbnail}
         alt={course.title}
@@ -14,6 +15,7 @@ export default function CourseCard({ course }: { course: Course }) {
       />
       <h2 className="text-xl font-semibold mt-2">{course.title}</h2>
       <p className="text-gray-600">{course.short_description}</p>
-    </Link>
+    </div>
+    // </Link>
   );
 }

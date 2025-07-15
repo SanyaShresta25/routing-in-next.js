@@ -1,7 +1,3 @@
-export default function CourseLoading() {
-  return (
-    <div className="p-6 text-center text-blue-600 animate-pulse">
-      Loading course details...
-    </div>
-  );
-}
+import Loading from "@/components/Loading";
+
+export default Loading;
