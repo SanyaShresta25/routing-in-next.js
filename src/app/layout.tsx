@@ -1,5 +1,6 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { ReactNode } from 'react';
+import './globals.css'; // Imported once here
 
 export default async function LocaleLayout({
   children,
@@ -12,7 +13,7 @@ export default async function LocaleLayout({
   try {
     messages = (await import(`../../messages/${params.locale}.json`)).default;
   } catch {
-    messages = (await import(`../../messages/en.json`)).default;
+    messages = (await import(`../messages/en.json`)).default;
   }
   return (
     <html lang={params.locale}>
