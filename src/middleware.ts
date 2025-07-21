@@ -1,42 +1,43 @@
-  import { NextResponse } from 'next/server';
-  import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-  const publicRoutes = ['/login'];
-  const protectedRoutes = ['/home', '/about', '/profile', '/blog', '/contact', '/course'];
+const protectedRoutes = ['/home', '/about', '/profile', '/blog', '/contact', '/course'];
 
-  export function middleware(request: NextRequest) {
-    const { pathname } = request.nextUrl;
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  const segments = pathname.split('/').filter(Boolean);
+  const locale = segments[0] === 'kn' ? 'kn' : 'en';
 
-    if (
-      pathname.startsWith('/_next/') ||
-      pathname.startsWith('/api/') ||
-      pathname === '/favicon.ico'
-    ) {
-      return NextResponse.next();
-    }
 
-    const token = request.cookies.get('token')?.value;
-    const isAuth = Boolean(token);
-
-    if (!isAuth && protectedRoutes.includes(pathname)) {
-      const loginUrl = new URL('/login', request.url);
-      const res = NextResponse.redirect(loginUrl);
-      res.headers.set('x-middleware-cache', 'no-cache');
-      return res;
-    }
-
-    if (isAuth && publicRoutes.includes(pathname)) {
-      const homeUrl = new URL('/home', request.url);
-      const res = NextResponse.redirect(homeUrl);
-      res.headers.set('x-middleware-cache', 'no-cache');
-      return res;
-    }
-
-    const res = NextResponse.next();
-    res.headers.set('x-middleware-cache', 'no-cache');
-    return res;
+  if (
+    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/api/') ||
+    pathname === '/favicon.ico'
+  ) {
+    return NextResponse.next();
   }
 
-  export const config = {
-    matcher: ['/((?!_next|api|favicon.ico|images|assets).*)'],
-  };
+  const token = request.cookies.get('token')?.value;
+  const isAuth = Boolean(token);
+
+
+  if (!isAuth && (pathname === '/' || pathname === '/en')) {
+    return NextResponse.redirect(new URL('/en/login', request.url));
+  }
+
+ 
+  if (!isAuth && protectedRoutes.some(route => pathname.startsWith(`/${locale}${route}`))) {
+    return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
+  }
+
+ 
+  if (isAuth && pathname === `/${locale}/login`) {
+    return NextResponse.redirect(new URL(`/${locale}/home`, request.url));
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ['/((?!_next|api|favicon.ico|images|assets).*)'],
+};

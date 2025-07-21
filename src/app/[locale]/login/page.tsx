@@ -10,15 +10,18 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+
+  const locale = typeof window !== 'undefined' ? window.location.pathname.split('/')[1] : 'en';
+
   useEffect(() => {
-    // Check for token cookie
+ 
     if (typeof document !== 'undefined') {
       const hasToken = document.cookie.split(';').some(c => c.trim().startsWith('token='));
       if (hasToken) {
-        router.replace('/home');
+        router.replace(`/${locale}/home`);
       }
     }
-  }, [router]);
+  }, [router, locale]);
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -36,7 +39,7 @@ export default function LoginPage() {
     if (res.ok && (data.token || data.accessToken)) {
       const token = data.token || data.accessToken;
       document.cookie = `token=${token}; path=/`;
-      router.push('/home');
+      router.push(`/${locale}/home`);
     } else {
       setError('Invalid credentials');
     }

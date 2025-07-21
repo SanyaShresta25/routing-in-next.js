@@ -1,16 +1,20 @@
 // next.config.ts
-import { NextConfig } from 'next';
+import createNextIntlPlugin from 'next-intl/plugin';
+import type { RemotePattern } from 'next/dist/shared/lib/image-config';
 
+const withNextIntl = createNextIntlPlugin();
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: '**.unsplash.com',
-      },
+        pathname: '/**',
+        port: ''
+      } as RemotePattern,
     ],
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

@@ -1,0 +1,14 @@
+{
+  "home": {
+    "title": "Welcome to Huddle!",
+    "description": "Build the community your fans will love."
+  },
+  "navbar": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "courses": "Courses",
+    "blog": "Blog",
+    "logout": "Logout"
+  }
+} 
