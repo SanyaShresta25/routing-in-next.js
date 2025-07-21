@@ -3,43 +3,44 @@
 import { Menu, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const pathname = usePathname();
+  const params = useParams();
   const router = useRouter();
   const t = useTranslations('navbar');
 
+  // Get current locale from params
+  const locale = typeof params.locale === 'string' ? params.locale : 'en';
 
-  const locale = pathname.split('/')[1] === 'kn' ? 'kn' : 'en';
-
-
+  // Client-side auth check: redirect to /[locale]/login if not logged in and not on /login
   useEffect(() => {
-    if (typeof document !== 'undefined' && !pathname.includes('/login')) {
+    if (typeof document !== 'undefined' && !window.location.pathname.includes('/login')) {
       const hasToken = document.cookie.split(';').some(c => c.trim().startsWith('token='));
       if (!hasToken) {
         router.replace(`/${locale}/login`);
       }
     }
-  }, [pathname, router, locale]);
+  }, [router, locale]);
 
-  
-  if (pathname.includes('/login')) return null;
+  // Hide header on login page
+  if (typeof window !== 'undefined' && window.location.pathname.includes('/login')) return null;
 
+  // Logout handler
   const handleLogout = () => {
     document.cookie = 'token=; Max-Age=0; path=/;';
     localStorage.removeItem('user');
     router.replace(`/${locale}/login`);
   };
 
-
+  // Language switcher
   const currentLocale = locale;
   const handleLocaleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLocale = e.target.value;
-   
-    const segments = pathname.split('/').filter(Boolean);
+    // Replace the first segment with the new locale
+    const segments = window.location.pathname.split('/').filter(Boolean);
     if (segments[0] === 'en' || segments[0] === 'kn') {
       segments[0] = newLocale;
     } else {
