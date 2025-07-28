@@ -1,4 +1,4 @@
-import Header from '@/components/Header';
+
 import { Facebook, Instagram, Twitter } from 'lucide-react';
 import { Metadata } from "next";
 import Image from 'next/image';
@@ -12,7 +12,7 @@ export default function Home() {
  
   return (
     <>
-      <Header />
+   
       <main className="min-h-screen bg-purple-700 relative overflow-hidden font-poppins">
         <Image
           src="/images/bg-desktop.svg"

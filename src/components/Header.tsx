@@ -1,20 +1,19 @@
 'use client';
-
 import { Menu, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import EventRegistrationForm from '@/components/EventRegistrationForm/EventRegistrationForm';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations('navbar');
 
-
   const locale = pathname.split('/')[1] === 'kn' ? 'kn' : 'en';
-
 
   useEffect(() => {
     if (typeof document !== 'undefined' && !pathname.includes('/login')) {
@@ -25,7 +24,6 @@ export default function Header() {
     }
   }, [pathname, router, locale]);
 
-  
   if (pathname.includes('/login')) return null;
 
   const handleLogout = () => {
@@ -34,11 +32,9 @@ export default function Header() {
     router.replace(`/${locale}/login`);
   };
 
-
   const currentLocale = locale;
   const handleLocaleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLocale = e.target.value;
-   
     const segments = pathname.split('/').filter(Boolean);
     if (segments[0] === 'en' || segments[0] === 'kn') {
       segments[0] = newLocale;
@@ -60,6 +56,8 @@ export default function Header() {
           <Link href={`/${locale}/contact`} className="hover:text-blue-400 transition-colors duration-200">{t('contact')}</Link>
           <Link href={`/${locale}/course`} className="hover:text-blue-400 transition-colors duration-200">{t('courses')}</Link>
           <Link href={`/${locale}/blog`} className="hover:text-blue-400 transition-colors duration-200">{t('blog')}</Link>
+            <Link href={`/${locale}/event-registration/form`} className="hover:text-blue-400 transition-colors duration-200">{t('event-registration')}</Link>
+        
         </nav>
 
         {/* Language Dropdown */}
@@ -97,13 +95,34 @@ export default function Header() {
           <Link href={`/${locale}/contact`} onClick={() => setMenuOpen(false)} className="block hover:text-blue-400">{t('contact')}</Link>
           <Link href={`/${locale}/course`} onClick={() => setMenuOpen(false)} className="block hover:text-blue-400">{t('courses')}</Link>
           <Link href={`/${locale}/blog`} onClick={() => setMenuOpen(false)} className="block hover:text-blue-400">{t('blog')}</Link>
-
+          <button
+            onClick={() => { setMenuOpen(false); setShowForm(true); }}
+            className="block w-full text-left text-blue-400 mt-2 py-2 hover:text-blue-300"
+          >
+            {t('register')}
+          </button>
           <button
             onClick={() => { setMenuOpen(false); handleLogout(); }}
             className="block w-full text-left text-red-500 mt-2 py-2 hover:text-red-400"
           >
             {t('logout')}
           </button>
+        </div>
+      )}
+
+      {/* The Event Registration Form modal */}
+      {showForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[60]">
+          <div className="bg-white max-w-lg w-full p-6 rounded shadow-lg relative">
+            <button
+              onClick={() => setShowForm(false)}
+              className="absolute top-2 right-2 text-black hover:text-red-500"
+              aria-label="Close"
+            >
+              <X size={24} />
+            </button>
+            <EventRegistrationForm />
+          </div>
         </div>
       )}
     </header>

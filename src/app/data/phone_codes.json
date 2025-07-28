@@ -1,0 +1,153 @@
+[
+  {
+    "id": 1,
+    "phoneCode": "AF +93",
+    "phoneLengths": [
+      9
+    ]
+  },
+  {
+    "id": 2,
+    "phoneCode": "AX +358-18",
+    "phoneLengths": [
+      7,
+      10
+    ]
+  },
+  {
+    "id": 3,
+    "phoneCode": "AL +355",
+    "phoneLengths": [
+      9
+    ]
+  },
+  {
+    "id": 4,
+    "phoneCode": "DZ +213",
+    "phoneLengths": [
+      9
+    ]
+  },
+  {
+    "id": 5,
+    "phoneCode": "AS +1-684",
+    "phoneLengths": [
+      10
+    ]
+  },
+  {
+    "id": 6,
+    "phoneCode": "AD +376",
+    "phoneLengths": [
+      6
+    ]
+  },
+  {
+    "id": 7,
+    "phoneCode": "AO +244",
+    "phoneLengths": [
+      9
+    ]
+  },
+  {
+    "id": 8,
+    "phoneCode": "AI +1-264",
+    "phoneLengths": [
+      10
+    ]
+  },
+  {
+    "id": 9,
+    "phoneCode": "AQ +672",
+    "phoneLengths": [
+      6
+    ]
+  },
+  {
+    "id": 10,
+    "phoneCode": "AG +1-268",
+    "phoneLengths": [
+      10
+    ]
+  },
+  {
+    "id": 11,
+    "phoneCode": "AR +54",
+    "phoneLengths": [
+      6,
+      7,
+      8
+    ]
+  },
+  {
+    "id": 12,
+    "phoneCode": "AM +374",
+    "phoneLengths": [
+      6
+    ]
+  },
+  {
+    "id": 13,
+    "phoneCode": "AW +297",
+    "phoneLengths": [
+      7
+    ]
+  },
+  {
+    "id": 14,
+    "phoneCode": "AU +61",
+    "phoneLengths": [
+      9
+    ]
+  },
+  {
+    "id": 15,
+    "phoneCode": "AT +43",
+    "phoneLengths": [
+      10,
+      11
+    ]
+  },
+  {
+    "id": 16,
+    "phoneCode": "AZ +994",
+    "phoneLengths": [
+      9
+    ]
+  },
+  {
+    "id": 17,
+    "phoneCode": "BS +1-242",
+    "phoneLengths": [
+      10
+    ]
+  },
+  {
+    "id": 18,
+    "phoneCode": "BH +973",
+    "phoneLengths": [
+      8
+    ]
+  },
+  {
+    "id": 19,
+    "phoneCode": "BD +880",
+    "phoneLengths": [
+      10
+    ]
+  },
+  {
+    "id": 20,
+    "phoneCode": "BB +1-246",
+    "phoneLengths": [
+      10
+    ]
+  },
+  {
+    "id": 21,
+    "phoneCode": "IN +91",
+    "phoneLengths": [
+      10
+    ]
+  }
+]

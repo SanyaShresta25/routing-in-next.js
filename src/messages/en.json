@@ -9,6 +9,7 @@
     "contact": "Contact",
     "courses": "Courses",
     "blog": "Blog",
-    "logout": "Logout"
+    "logout": "Logout",
+    "event-registration": "Registration Form"
   }
-} 
+}
