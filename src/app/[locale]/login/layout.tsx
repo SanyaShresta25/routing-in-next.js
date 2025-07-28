@@ -1,7 +1,13 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { ReactNode } from 'react';
 
-export default async function LoginLayout({ children, params }: { children: ReactNode, params: { locale: string } }) {
+export default async function LoginLayout(props: { children: ReactNode, params: Promise<{ locale: string }> }) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   let messages;
   try {
     messages = (await import(`../../../messages/${params.locale}.json`)).default;

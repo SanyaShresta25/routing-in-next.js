@@ -2,21 +2,22 @@
 import { Menu, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import EventRegistrationForm from '@/components/EventRegistrationForm/EventRegistrationForm';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showForm, setShowForm] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations('navbar');
 
+
   const locale = pathname.split('/')[1] === 'kn' ? 'kn' : 'en';
 
+
   useEffect(() => {
-    if (typeof document !== 'undefined' && !pathname.includes('/login')) {
+    if (typeof document !== 'undefined' && !window.location.pathname.includes('/login')) {
       const hasToken = document.cookie.split(';').some(c => c.trim().startsWith('token='));
       if (!hasToken) {
         router.replace(`/${locale}/login`);
@@ -24,6 +25,7 @@ export default function Header() {
     }
   }, [pathname, router, locale]);
 
+  
   if (pathname.includes('/login')) return null;
 
   const handleLogout = () => {
@@ -32,9 +34,11 @@ export default function Header() {
     router.replace(`/${locale}/login`);
   };
 
+
   const currentLocale = locale;
   const handleLocaleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLocale = e.target.value;
+   
     const segments = pathname.split('/').filter(Boolean);
     if (segments[0] === 'en' || segments[0] === 'kn') {
       segments[0] = newLocale;
@@ -44,6 +48,10 @@ export default function Header() {
     const newPath = '/' + segments.join('/');
     router.replace(newPath);
   };
+
+  function setShowForm(arg0: boolean) {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <header className="bg-gray-950 text-white px-6 py-4 shadow-md sticky top-0 z-50">

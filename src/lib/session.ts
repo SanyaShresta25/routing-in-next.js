@@ -2,6 +2,6 @@
 import { cookies } from 'next/headers';
 
 export async function deleteSession() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   (await cookieStore).delete('token');
 }
